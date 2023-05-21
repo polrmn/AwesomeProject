@@ -11,6 +11,9 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
+// import ImagePicker from "react-native-image-picker";
+// import ImageCropPicker from "react-native-image-crop-picker";
+import * as ImagePicker from "expo-image-picker";
 import styles from "./RegistrationStyles";
 
 function RegistrationScreen() {
@@ -24,12 +27,23 @@ function RegistrationScreen() {
   const [isFocusEmail, setIsFocusEmail] = useState(false);
   const [isFocusPassword, setIsFocusPassword] = useState(false);
 
-  const handleAvatarUpload = () => {
-    console.log("avatar");
+  const handleAvatarUpload = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 1,
+    });
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setAvatar(result.assets[0].uri);
+    }
   };
 
   const handleRegistration = () => {
-    console.log({ email: email, password: password });
+    console.log({ name: name, email: email, password: password, avatar: avatar });
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -61,7 +75,7 @@ function RegistrationScreen() {
                 {avatar && (
                   <Image
                     source={{ uri: avatar }}
-                    style={{ width: 100, height: 100 }}
+                    style={styles.avatarImage}
                   />
                 )}
                 <TouchableOpacity

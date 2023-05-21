@@ -16,15 +16,10 @@ import styles from "./LoginScreenStyles";
 function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
   const [isKeyboard, setIsKeyboard] = useState(false);
   const [isFocusEmail, setIsFocusEmail] = useState(false);
   const [isFocusPassword, setIsFocusPassword] = useState(false);
-
-  const handleAvatarUpload = () => {
-    console.log("avatar");
-  };
 
   const handleRegistration = () => {
     console.log({ email: email, password: password });

@@ -28,6 +28,11 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -120 * 0.5 }, { translateY: 0 }],
     borderRadius: 16,
   },
+  avatarImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 16,
+  },
   buttonContainer: {
     position: "absolute",
     bottom: 14,
