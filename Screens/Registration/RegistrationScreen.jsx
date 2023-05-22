@@ -16,7 +16,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import styles from "./RegistrationStyles";
 
-function RegistrationScreen() {
+function RegistrationScreen({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +43,13 @@ function RegistrationScreen() {
   };
 
   const handleRegistration = () => {
-    console.log({ name: name, email: email, password: password, avatar: avatar });
+    console.log({
+      name: name,
+      email: email,
+      password: password,
+      avatar: avatar,
+    });
+    navigation.navigate("Home");
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -73,10 +79,7 @@ function RegistrationScreen() {
             >
               <View style={styles.avatarWrapper}>
                 {avatar && (
-                  <Image
-                    source={{ uri: avatar }}
-                    style={styles.avatarImage}
-                  />
+                  <Image source={{ uri: avatar }} style={styles.avatarImage} />
                 )}
                 <TouchableOpacity
                   style={styles.buttonContainer}
@@ -159,6 +162,7 @@ function RegistrationScreen() {
                   ...styles.link,
                   display: isKeyboard ? "none" : "flex",
                 }}
+                onPress={() => navigation.navigate("Login")}
               >
                 Уже есть аккаунт? Войти
               </Text>

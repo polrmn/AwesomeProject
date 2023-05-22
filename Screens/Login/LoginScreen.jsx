@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import styles from "./LoginScreenStyles";
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -23,6 +23,7 @@ function LoginScreen() {
 
   const handleRegistration = () => {
     console.log({ email: email, password: password });
+    navigation.navigate("Home");
   };
 
   const handleTogglePasswordVisibility = () => {
@@ -106,6 +107,7 @@ function LoginScreen() {
                   ...styles.link,
                   display: isKeyboard ? "none" : "flex",
                 }}
+                onPress={() => navigation.navigate("Registration")}
               >
                 Нет аккаунта? Зарегистрироваться
               </Text>

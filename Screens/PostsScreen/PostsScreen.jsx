@@ -1,11 +1,8 @@
 import React from 'react'
+import { Text } from 'react-native'
 
 function PostsScreen() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <Text>PostsScreen</Text>;
 }
 
 export default PostsScreen
