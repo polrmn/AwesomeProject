@@ -14,6 +14,7 @@ function Home({ navigation }) {
     <Tab.Navigator
       tabBarOptions={{ style: { backgroundColor: "#fff" }, showLabel: false }}
       screenOptions={{
+        tabBarShowLabel: false,
         tabBarStyle: [
           {
             display: "flex",
