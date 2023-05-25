@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     color: "#212121",
+    width: '100%'
   },
   button: {
     paddingVertical: 16,

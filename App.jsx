@@ -5,7 +5,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import RegistrationScreen from "./Screens/Registration/RegistrationScreen";
 import LoginScreen from "./Screens/Login/LoginScreen";
 import Home from "./Screens/Home/Home";
+import CommentsScreen from "./Screens/CommentsScreen/CommentsScreen";
 import { Image, TouchableOpacity } from "react-native";
+import MapScreen from "./Screens/MapScreen/MapScreen";
 
 const MainStack = createStackNavigator();
 
@@ -18,32 +20,26 @@ export default function App() {
         <MainStack.Screen
           name="Home"
           component={Home}
-          // options={({ navigation }) => ({
-          //   title: "Публикации",
-          //   headerStyle: {
-          //     backgroundColor: "#fff",
-          //     borderBottomColor: "#212121",
-          //     borderBottomWidth: 1,
-          //   },
-          //   headerTintColor: "#212121",
-          //   headerTitleAlign: "center",
-          //   headerTitleStyle: {
-          //     fontWeight: 500,
-          //     fontSize: 17,
-          //     lineHeight: 22,
-          //   },
-          //   headerRight: () => (
-          //     <TouchableOpacity
-          //       style={{ padding: 10 }}
-          //       onPress={() => navigation.navigate("Login")}
-          //     >
-          //       <Image source={require("./assets/log-out.png")} />
-          //     </TouchableOpacity>
-          //   ),
-          //   headerLeft: null,
-          // })}
           options={{
-            headerShown: false
+            headerShown: false,
+          }}
+        />
+        <MainStack.Screen
+          name="Comments"
+          component={CommentsScreen}
+          options={{
+            title: "Коментарі",
+            headerTintColor: "#212121",
+            headerTitleAlign: "center",
+          }}
+        />
+        <MainStack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            title: "Локація",
+            headerTintColor: "#212121",
+            headerTitleAlign: "center",
           }}
         />
       </MainStack.Navigator>

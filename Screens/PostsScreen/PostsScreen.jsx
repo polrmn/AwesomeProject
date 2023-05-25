@@ -2,8 +2,11 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./PostsScreenStyles";
+import { useRoute } from "@react-navigation/native";
 
-function PostsScreen() {
+function PostsScreen({navigation}) {
+  const {params: location} = useRoute();
+
   return (
     <View style={styles.container}>
       <View style={styles.profileWrapper}>
@@ -27,11 +30,12 @@ function PostsScreen() {
             <Ionicons
               name="chatbubble-outline"
               style={styles.postDetailsIcon}
+              onPress={() => navigation.navigate('Comments')}
             />
             <Text style={styles.postDetailsText}>0</Text>
           </View>
           <View style={styles.postDetailsWrapper}>
-            <Ionicons name="location-outline" style={styles.postDetailsIcon} />
+            <Ionicons name="location-outline" style={styles.postDetailsIcon} onPress={()=>navigation.navigate('Map', location)}/>
             <Text style={[styles.postDetailsText, styles.textUnderlined]}>
               Ivano-Frankivs'k Region, Ukraine
             </Text>

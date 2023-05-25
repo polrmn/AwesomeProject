@@ -12,12 +12,14 @@ const Tab = createBottomTabNavigator();
 function Home({ navigation }) {
   return (
     <Tab.Navigator
-      tabBarOptions={{ style: { backgroundColor: "#fff" }, showLabel: false }}
+      // tabBarOptions={{ style: { backgroundColor: "#fff" }, showLabel: false }}
       screenOptions={{
         tabBarShowLabel: false,
+        showLabel: false,
         tabBarStyle: [
           {
             display: "flex",
+            backgroundColor: "#fff",
           },
           null,
         ],

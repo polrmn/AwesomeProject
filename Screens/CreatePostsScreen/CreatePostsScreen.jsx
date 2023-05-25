@@ -12,18 +12,35 @@ import { Ionicons } from "@expo/vector-icons";
 import { Camera } from "expo-camera";
 import { useState, useEffect } from "react";
 import * as MediaLibrary from "expo-media-library";
+import * as Location from "expo-location";
 
 function CreatePostsScreen({navigation}) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
   const [title, setTitle] = useState("");
+  const [location, setLocation] = useState('');
+  const [userLocation, setUserLocation] = useState(null)
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       await MediaLibrary.requestPermissionsAsync();
       setHasPermission(status === "granted");
+    })();
+
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setUserLocation(coords);
     })();
   }, []);
 
@@ -34,7 +51,8 @@ function CreatePostsScreen({navigation}) {
   };
 
   const publishPost = () => {
-    console.log({ photo: photo, title: title });
+    console.log({ photo: photo, title: title, location: location });
+    navigation.navigate("Posts", userLocation);
   };
 
   return (
@@ -58,10 +76,11 @@ function CreatePostsScreen({navigation}) {
         onChangeText={(text) => setTitle(text)}
       />
       <View style={styles.locationWrapper}>
-        <Ionicons name="location-outline" styles={styles.locationIcon} onPress={navigation.navigate('Posts')}/>
+        <Ionicons name="location-outline" styles={styles.locationIcon}/>
         <TextInput
           placeholder="Місцевість..."
           style={styles.inputPostLocation}
+          onChangeText={(text)=>setLocation(text)}
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={publishPost}>
