@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     paddingTop: 32,
     backgroundColor: "#fff",
   },
-  newImageWrapper: {
+  camera: {
     width: width - 32,
     height: 240,
     backgroundColor: "#E8E8E8",
@@ -17,6 +17,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 8,
+    // position: 'relative'
+  },
+  photo: {
+    // position: 'absolute',
+
+  },
+  image: {
+    width: width - 32,
+    height: 240,
+    // resizeMode: 'center',
   },
   cameIconWrapper: {
     width: 60,
