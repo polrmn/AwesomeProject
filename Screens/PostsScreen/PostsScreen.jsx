@@ -3,20 +3,25 @@ import { Image, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./PostsScreenStyles";
 import { useRoute } from "@react-navigation/native";
+import {useSelector} from 'react-redux'
 
 function PostsScreen({navigation}) {
   const {params: location} = useRoute();
+  const avatar = useSelector(state => state.auth.userAvatar)
+  const name = useSelector(state => state.auth.name)
+  const email = useSelector(state => state.auth.email)
+  console.log(name);
 
   return (
     <View style={styles.container}>
       <View style={styles.profileWrapper}>
         <Image
-          source={require("../../assets/user.png")}
+          source={{uri: avatar}}
           style={styles.profileImage}
         />
         <View>
-          <Text style={styles.name}>Natali Romanova</Text>
-          <Text style={styles.email}>email@example.com</Text>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.email}>{email}</Text>
         </View>
       </View>
       <View>

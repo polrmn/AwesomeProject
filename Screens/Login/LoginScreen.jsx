@@ -12,6 +12,8 @@ import {
   Keyboard,
 } from "react-native";
 import styles from "./LoginScreenStyles";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../redux/auth/authThunk";
 
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -21,9 +23,14 @@ function LoginScreen({ navigation }) {
   const [isFocusEmail, setIsFocusEmail] = useState(false);
   const [isFocusPassword, setIsFocusPassword] = useState(false);
 
+  const dispatch = useDispatch();
+
   const handleRegistration = () => {
-    console.log({ email: email, password: password });
-    navigation.navigate("Home");
+    // console.log({ email: email, password: password });
+    const result = dispatch(loginThunk({ email, password }));
+    if (result) {
+      navigation.navigate("Home");
+    }
   };
 
   const handleTogglePasswordVisibility = () => {

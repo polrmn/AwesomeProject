@@ -13,14 +13,18 @@ import { Camera } from "expo-camera";
 import { useState, useEffect } from "react";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
+import { useDispatch } from "react-redux";
+import { createPostThunk } from "../../redux/posts/postThunk";
 
-function CreatePostsScreen({navigation}) {
+function CreatePostsScreen({ navigation }) {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState("");
   const [hasPermission, setHasPermission] = useState(null);
   const [title, setTitle] = useState("");
-  const [location, setLocation] = useState('');
-  const [userLocation, setUserLocation] = useState(null)
+  const [location, setLocation] = useState("");
+  const [userLocation, setUserLocation] = useState(null);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -46,12 +50,12 @@ function CreatePostsScreen({navigation}) {
 
   const makePhoto = async () => {
     const photo = await camera.takePictureAsync();
-    setPhoto(photo.uri);
-    console.log(photo.uri);
+    setPhoto(photo);
   };
 
   const publishPost = () => {
     console.log({ photo: photo, title: title, location: location });
+    dispatch(createPostThunk({title, location, photo}));
     navigation.navigate("Posts", userLocation);
   };
 
@@ -59,7 +63,7 @@ function CreatePostsScreen({navigation}) {
     <View style={styles.container}>
       {photo ? (
         <View style={styles.photo}>
-          <Image source={{ uri: photo }} style={styles.image} />
+          <Image source={{ uri: photo.uri }} style={styles.image} />
         </View>
       ) : (
         <Camera style={styles.camera} ref={setCamera}>
@@ -76,11 +80,11 @@ function CreatePostsScreen({navigation}) {
         onChangeText={(text) => setTitle(text)}
       />
       <View style={styles.locationWrapper}>
-        <Ionicons name="location-outline" styles={styles.locationIcon}/>
+        <Ionicons name="location-outline" styles={styles.locationIcon} />
         <TextInput
           placeholder="Місцевість..."
           style={styles.inputPostLocation}
-          onChangeText={(text)=>setLocation(text)}
+          onChangeText={(text) => setLocation(text)}
         />
       </View>
       <TouchableOpacity style={styles.button} onPress={publishPost}>

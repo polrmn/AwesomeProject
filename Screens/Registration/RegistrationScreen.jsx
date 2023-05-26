@@ -11,10 +11,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
-// import ImagePicker from "react-native-image-picker";
-// import ImageCropPicker from "react-native-image-crop-picker";
 import * as ImagePicker from "expo-image-picker";
 import styles from "./RegistrationStyles";
+import { useDispatch } from "react-redux";
+import { registerThunk, loginThunk } from "../../redux/auth/authThunk";
+import {uploadUserData} from '../../redux/auth/authSlice'
+import {useSelector} from 'react-redux'
 
 function RegistrationScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -27,29 +29,28 @@ function RegistrationScreen({ navigation }) {
   const [isFocusEmail, setIsFocusEmail] = useState(false);
   const [isFocusPassword, setIsFocusPassword] = useState(false);
 
+  const dispatch = useDispatch();
+  const avatarState = useSelector(state=>state.auth.userAvatar)
+
   const handleAvatarUpload = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 4],
+      aspect: [1, 1],
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
-      setAvatar(result.assets[0].uri);
+      setAvatar(result.uri);
     }
   };
 
   const handleRegistration = () => {
-    console.log({
-      name: name,
-      email: email,
-      password: password,
-      avatar: avatar,
-    });
-    navigation.navigate("Home");
+    dispatch(uploadUserData({avatar, name}));
+    dispatch(registerThunk({ email, password, name, avatar }))
+      .unwrap()
+      .then(() => dispatch(loginThunk({email, password})).unwrap().then(()=>navigation.navigate("Home")));
+    
   };
 
   const handleTogglePasswordVisibility = () => {
