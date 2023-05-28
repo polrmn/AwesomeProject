@@ -19,13 +19,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.polrmn.AwesomeProject"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "expo": {
-      "runtimeVersion": "browser"
+    "extra": {
+      "eas": {
+        "projectId": "387e9d1f-16e1-4352-9e5c-beaf63812018"
+      }
     }
   }
 }

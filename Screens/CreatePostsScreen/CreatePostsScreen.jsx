@@ -3,9 +3,9 @@ import {
   Text,
   View,
   TextInput,
-  Button,
   TouchableOpacity,
   Image,
+  ActivityIndicator,
 } from "react-native";
 import styles from "./CreatePostsScreenStyles";
 import { Ionicons } from "@expo/vector-icons";
@@ -13,7 +13,7 @@ import { Camera } from "expo-camera";
 import { useState, useEffect } from "react";
 import * as MediaLibrary from "expo-media-library";
 import * as Location from "expo-location";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPostThunk } from "../../redux/posts/postThunk";
 
 function CreatePostsScreen({ navigation }) {
@@ -25,6 +25,7 @@ function CreatePostsScreen({ navigation }) {
   const [userLocation, setUserLocation] = useState(null);
 
   const dispatch = useDispatch();
+  const isLoading = useSelector(state=>state.post.isLoading)
 
   useEffect(() => {
     (async () => {
@@ -54,10 +55,18 @@ function CreatePostsScreen({ navigation }) {
   };
 
   const publishPost = () => {
-    console.log({ photo: photo, title: title, location: location });
-    dispatch(createPostThunk({title, location, photo}));
+    // console.log({ photo: photo, title: title, location: location });
+    dispatch(createPostThunk({title, location, photo})).unwrap().then(()=>setPhoto(''));
     navigation.navigate("Posts", userLocation);
   };
+
+  if(isLoading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

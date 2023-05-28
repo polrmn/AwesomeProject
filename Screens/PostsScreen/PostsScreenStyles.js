@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   },
   postImage: {
     width: width - 32,
+    height: 240,
     borderRadius: 8,
     marginBottom: 8,
   },
